@@ -1,0 +1,3124 @@
+Terminals unused in grammar
+
+   INCLUDE
+   DOT
+   '<'
+   '>'
+
+
+State 80 conflicts: 2 shift/reduce
+State 81 conflicts: 2 shift/reduce
+State 82 conflicts: 2 shift/reduce
+State 83 conflicts: 2 shift/reduce
+State 84 conflicts: 2 shift/reduce
+State 96 conflicts: 2 shift/reduce
+State 97 conflicts: 2 shift/reduce
+State 98 conflicts: 2 shift/reduce
+State 99 conflicts: 2 shift/reduce
+State 100 conflicts: 2 shift/reduce
+State 139 conflicts: 3 shift/reduce
+State 158 conflicts: 2 shift/reduce
+State 176 conflicts: 1 shift/reduce
+State 181 conflicts: 7 shift/reduce
+State 187 conflicts: 1 shift/reduce
+State 188 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: start $end
+
+    1 start: Function
+    2      | Declaration
+
+    3 Declaration: Type Assignment ';'
+    4            | Assignment ';'
+    5            | FunctionCall ';'
+    6            | ArrayUsage ';'
+    7            | Type ArrayUsage ';'
+    8            | StructStmt ';'
+    9            | error
+
+   10 Assignment: ID '=' Assignment
+   11           | ID '=' FunctionCall
+   12           | ID '=' ArrayUsage
+   13           | ArrayUsage '=' Assignment
+   14           | ID ',' Assignment
+   15           | NUM ',' Assignment
+   16           | ID '+' Assignment
+   17           | ID '-' Assignment
+   18           | ID '*' Assignment
+   19           | ID '/' Assignment
+   20           | NUM '+' Assignment
+   21           | NUM '-' Assignment
+   22           | NUM '*' Assignment
+   23           | NUM '/' Assignment
+   24           | NUM OR Assignment
+   25           | NUM AND Assignment
+   26           | NUM LE Assignment
+   27           | NUM GE Assignment
+   28           | NUM NE Assignment
+   29           | NUM EQ Assignment
+   30           | NUM GT Assignment
+   31           | NUM LT Assignment
+   32           | ID OR Assignment
+   33           | ID AND Assignment
+   34           | ID LE Assignment
+   35           | ID GE Assignment
+   36           | ID NE Assignment
+   37           | ID EQ Assignment
+   38           | ID GT Assignment
+   39           | ID LT Assignment
+   40           | INC Assignment
+   41           | Assignment INC
+   42           | DEC Assignment
+   43           | Assignment DEC
+   44           | PERCENT Assignment
+   45           | AMPERSEND Assignment
+   46           | '{' Assignment '}'
+   47           | NUM
+   48           | ID
+
+   49 FunctionCall: ID '(' ')'
+   50             | ID '(' Assignment ')'
+
+   51 ArrayUsage: ID '[' Assignment ']'
+   52           | ID '[' Assignment ']' '[' Assignment ']'
+
+   53 Function: Type ID '(' ArgListOpt ')' CompoundStmt
+
+   54 ArgListOpt: ArgList
+   55           | %empty
+
+   56 ArgList: ArgList ',' Arg
+   57        | Arg
+
+   58 Arg: Type ID
+
+   59 CompoundStmt: '{' StmtList '}'
+
+   60 StmtList: StmtList Stmt
+   61         | %empty
+
+   62 Stmt: WhileStmt
+   63     | Declaration
+   64     | ForStmt
+   65     | IfStmt
+   66     | PrintFunc
+   67     | ScanFunc
+   68     | SwitchFunc
+   69     | CaseStmt
+   70     | BreakFunc
+   71     | Assignment
+   72     | ';'
+
+   73 Type: INT
+   74     | FLOAT
+   75     | CHAR
+   76     | DOUBLE
+   77     | VOID
+
+   78 WhileStmt: WHILE '(' Expr ')' Stmt
+   79          | WHILE '(' Expr ')' CompoundStmt
+
+   80 ForStmt: FOR '(' Type Expr ';' Expr ';' Expr ')' '{' StmtList '}'
+   81        | FOR '(' Expr ';' Expr ';' Expr ')' CompoundStmt
+   82        | FOR '(' Expr ')' Stmt
+   83        | FOR '(' Expr ')' CompoundStmt
+
+   84 IfStmt: IF '(' Expr ')' Stmt ELSE Stmt
+   85       | IF '(' Expr ')' Stmt
+   86       | IF '(' Expr ')' Stmt ELSE CompoundStmt
+   87       | IF '(' Expr ')' CompoundStmt
+   88       | IF '(' Expr ')' CompoundStmt ELSE CompoundStmt
+
+   89 StructStmt: STRUCT ID '{' Type Assignment '}'
+
+   90 PrintFunc: PRINTF '(' '"' Expr '"' ')' ';'
+   91          | PRINTF '(' '"' ExprList '"' ')' ';'
+   92          | PRINTF '(' '"' Expr '"' ',' Expr ')' ';'
+
+   93 ScanFunc: SCANF '(' '"' ExprList '"' ',' Expr ')' ';'
+
+   94 CaseStmt: CASE NUM ':' Stmt
+
+   95 BreakFunc: BREAK ';'
+
+   96 SwitchFunc: SWITCH '(' Expr ')' '{' StmtList '}'
+
+   97 ExprList: ExprList Expr
+   98         | Expr
+
+   99 Expr: Assignment
+  100     | ArrayUsage
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'"' (34) 90 91 92 93
+'(' (40) 49 50 53 78 79 80 81 82 83 84 85 86 87 88 90 91 92 93 96
+')' (41) 49 50 53 78 79 80 81 82 83 84 85 86 87 88 90 91 92 93 96
+'*' (42) 18 22
+'+' (43) 16 20
+',' (44) 14 15 56 92 93
+'-' (45) 17 21
+'/' (47) 19 23
+':' (58) 94
+';' (59) 3 4 5 6 7 8 72 80 81 90 91 92 93 95
+'<' (60)
+'=' (61) 10 11 12 13
+'>' (62)
+'[' (91) 51 52
+']' (93) 51 52
+'{' (123) 46 59 80 89 96
+'}' (125) 46 59 80 89 96
+error (256) 9
+INT (258) 73
+FLOAT (259) 74
+CHAR (260) 75
+DOUBLE (261) 76
+VOID (262) 77
+FOR (263) 80 81 82 83
+WHILE (264) 78 79
+SWITCH (265) 96
+CASE (266) 94
+BREAK (267) 95
+IF (268) 84 85 86 87 88
+ELSE (269) 84 86 88
+PRINTF (270) 90 91 92
+SCANF (271) 93
+STRUCT (272) 89
+NUM (273) 15 20 21 22 23 24 25 26 27 28 29 30 31 47 94
+ID (274) 10 11 12 14 16 17 18 19 32 33 34 35 36 37 38 39 48 49 50 51
+    52 53 58 89
+INCLUDE (275)
+DOT (276)
+AND (277) 25 33
+OR (278) 24 32
+LE (279) 26 34
+GE (280) 27 35
+EQ (281) 29 37
+NE (282) 28 36
+LT (283) 31 39
+GT (284) 30 38
+INC (285) 40 41
+DEC (286) 42 43
+PERCENT (287) 44
+AMPERSEND (288) 45
+
+
+Nonterminals, with rules where they appear
+
+$accept (51)
+    on left: 0
+start (52)
+    on left: 1 2, on right: 0
+Declaration (53)
+    on left: 3 4 5 6 7 8 9, on right: 2 63
+Assignment (54)
+    on left: 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+    28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48,
+    on right: 3 4 10 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28
+    29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 50 51 52
+    71 89 99
+FunctionCall (55)
+    on left: 49 50, on right: 5 11
+ArrayUsage (56)
+    on left: 51 52, on right: 6 7 12 13 100
+Function (57)
+    on left: 53, on right: 1
+ArgListOpt (58)
+    on left: 54 55, on right: 53
+ArgList (59)
+    on left: 56 57, on right: 54 56
+Arg (60)
+    on left: 58, on right: 56 57
+CompoundStmt (61)
+    on left: 59, on right: 53 79 81 83 86 87 88
+StmtList (62)
+    on left: 60 61, on right: 59 60 80 96
+Stmt (63)
+    on left: 62 63 64 65 66 67 68 69 70 71 72, on right: 60 78 82 84
+    85 86 94
+Type (64)
+    on left: 73 74 75 76 77, on right: 3 7 53 58 80 89
+WhileStmt (65)
+    on left: 78 79, on right: 62
+ForStmt (66)
+    on left: 80 81 82 83, on right: 64
+IfStmt (67)
+    on left: 84 85 86 87 88, on right: 65
+StructStmt (68)
+    on left: 89, on right: 8
+PrintFunc (69)
+    on left: 90 91 92, on right: 66
+ScanFunc (70)
+    on left: 93, on right: 67
+CaseStmt (71)
+    on left: 94, on right: 69
+BreakFunc (72)
+    on left: 95, on right: 70
+SwitchFunc (73)
+    on left: 96, on right: 68
+ExprList (74)
+    on left: 97 98, on right: 91 93 97
+Expr (75)
+    on left: 99 100, on right: 78 79 80 81 82 83 84 85 86 87 88 90
+    92 93 96 97 98
+
+
+State 0
+
+    0 $accept: . start $end
+
+    error      shift, and go to state 1
+    INT        shift, and go to state 2
+    FLOAT      shift, and go to state 3
+    CHAR       shift, and go to state 4
+    DOUBLE     shift, and go to state 5
+    VOID       shift, and go to state 6
+    STRUCT     shift, and go to state 7
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 9
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    start         go to state 15
+    Declaration   go to state 16
+    Assignment    go to state 17
+    FunctionCall  go to state 18
+    ArrayUsage    go to state 19
+    Function      go to state 20
+    Type          go to state 21
+    StructStmt    go to state 22
+
+
+State 1
+
+    9 Declaration: error .
+
+    $default  reduce using rule 9 (Declaration)
+
+
+State 2
+
+   73 Type: INT .
+
+    $default  reduce using rule 73 (Type)
+
+
+State 3
+
+   74 Type: FLOAT .
+
+    $default  reduce using rule 74 (Type)
+
+
+State 4
+
+   75 Type: CHAR .
+
+    $default  reduce using rule 75 (Type)
+
+
+State 5
+
+   76 Type: DOUBLE .
+
+    $default  reduce using rule 76 (Type)
+
+
+State 6
+
+   77 Type: VOID .
+
+    $default  reduce using rule 77 (Type)
+
+
+State 7
+
+   89 StructStmt: STRUCT . ID '{' Type Assignment '}'
+
+    ID  shift, and go to state 23
+
+
+State 8
+
+   15 Assignment: NUM . ',' Assignment
+   20           | NUM . '+' Assignment
+   21           | NUM . '-' Assignment
+   22           | NUM . '*' Assignment
+   23           | NUM . '/' Assignment
+   24           | NUM . OR Assignment
+   25           | NUM . AND Assignment
+   26           | NUM . LE Assignment
+   27           | NUM . GE Assignment
+   28           | NUM . NE Assignment
+   29           | NUM . EQ Assignment
+   30           | NUM . GT Assignment
+   31           | NUM . LT Assignment
+   47           | NUM .
+
+    AND  shift, and go to state 24
+    OR   shift, and go to state 25
+    LE   shift, and go to state 26
+    GE   shift, and go to state 27
+    EQ   shift, and go to state 28
+    NE   shift, and go to state 29
+    LT   shift, and go to state 30
+    GT   shift, and go to state 31
+    ','  shift, and go to state 32
+    '+'  shift, and go to state 33
+    '-'  shift, and go to state 34
+    '*'  shift, and go to state 35
+    '/'  shift, and go to state 36
+
+    $default  reduce using rule 47 (Assignment)
+
+
+State 9
+
+   10 Assignment: ID . '=' Assignment
+   11           | ID . '=' FunctionCall
+   12           | ID . '=' ArrayUsage
+   14           | ID . ',' Assignment
+   16           | ID . '+' Assignment
+   17           | ID . '-' Assignment
+   18           | ID . '*' Assignment
+   19           | ID . '/' Assignment
+   32           | ID . OR Assignment
+   33           | ID . AND Assignment
+   34           | ID . LE Assignment
+   35           | ID . GE Assignment
+   36           | ID . NE Assignment
+   37           | ID . EQ Assignment
+   38           | ID . GT Assignment
+   39           | ID . LT Assignment
+   48           | ID .
+   49 FunctionCall: ID . '(' ')'
+   50             | ID . '(' Assignment ')'
+   51 ArrayUsage: ID . '[' Assignment ']'
+   52           | ID . '[' Assignment ']' '[' Assignment ']'
+
+    '='  shift, and go to state 37
+    AND  shift, and go to state 38
+    OR   shift, and go to state 39
+    LE   shift, and go to state 40
+    GE   shift, and go to state 41
+    EQ   shift, and go to state 42
+    NE   shift, and go to state 43
+    LT   shift, and go to state 44
+    GT   shift, and go to state 45
+    ','  shift, and go to state 46
+    '+'  shift, and go to state 47
+    '-'  shift, and go to state 48
+    '*'  shift, and go to state 49
+    '/'  shift, and go to state 50
+    '('  shift, and go to state 51
+    '['  shift, and go to state 52
+
+    $default  reduce using rule 48 (Assignment)
+
+
+State 10
+
+   40 Assignment: INC . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 54
+    ArrayUsage  go to state 55
+
+
+State 11
+
+   42 Assignment: DEC . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 56
+    ArrayUsage  go to state 55
+
+
+State 12
+
+   44 Assignment: PERCENT . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 57
+    ArrayUsage  go to state 55
+
+
+State 13
+
+   45 Assignment: AMPERSEND . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 58
+    ArrayUsage  go to state 55
+
+
+State 14
+
+   46 Assignment: '{' . Assignment '}'
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 59
+    ArrayUsage  go to state 55
+
+
+State 15
+
+    0 $accept: start . $end
+
+    $end  shift, and go to state 60
+
+
+State 16
+
+    2 start: Declaration .
+
+    $default  reduce using rule 2 (start)
+
+
+State 17
+
+    4 Declaration: Assignment . ';'
+   41 Assignment: Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+    ';'  shift, and go to state 63
+
+
+State 18
+
+    5 Declaration: FunctionCall . ';'
+
+    ';'  shift, and go to state 64
+
+
+State 19
+
+    6 Declaration: ArrayUsage . ';'
+   13 Assignment: ArrayUsage . '=' Assignment
+
+    '='  shift, and go to state 65
+    ';'  shift, and go to state 66
+
+
+State 20
+
+    1 start: Function .
+
+    $default  reduce using rule 1 (start)
+
+
+State 21
+
+    3 Declaration: Type . Assignment ';'
+    7            | Type . ArrayUsage ';'
+   53 Function: Type . ID '(' ArgListOpt ')' CompoundStmt
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 67
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 68
+    ArrayUsage  go to state 69
+
+
+State 22
+
+    8 Declaration: StructStmt . ';'
+
+    ';'  shift, and go to state 70
+
+
+State 23
+
+   89 StructStmt: STRUCT ID . '{' Type Assignment '}'
+
+    '{'  shift, and go to state 71
+
+
+State 24
+
+   25 Assignment: NUM AND . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 72
+    ArrayUsage  go to state 55
+
+
+State 25
+
+   24 Assignment: NUM OR . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 73
+    ArrayUsage  go to state 55
+
+
+State 26
+
+   26 Assignment: NUM LE . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 74
+    ArrayUsage  go to state 55
+
+
+State 27
+
+   27 Assignment: NUM GE . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 75
+    ArrayUsage  go to state 55
+
+
+State 28
+
+   29 Assignment: NUM EQ . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 76
+    ArrayUsage  go to state 55
+
+
+State 29
+
+   28 Assignment: NUM NE . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 77
+    ArrayUsage  go to state 55
+
+
+State 30
+
+   31 Assignment: NUM LT . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 78
+    ArrayUsage  go to state 55
+
+
+State 31
+
+   30 Assignment: NUM GT . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 79
+    ArrayUsage  go to state 55
+
+
+State 32
+
+   15 Assignment: NUM ',' . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 80
+    ArrayUsage  go to state 55
+
+
+State 33
+
+   20 Assignment: NUM '+' . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 81
+    ArrayUsage  go to state 55
+
+
+State 34
+
+   21 Assignment: NUM '-' . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 82
+    ArrayUsage  go to state 55
+
+
+State 35
+
+   22 Assignment: NUM '*' . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 83
+    ArrayUsage  go to state 55
+
+
+State 36
+
+   23 Assignment: NUM '/' . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 84
+    ArrayUsage  go to state 55
+
+
+State 37
+
+   10 Assignment: ID '=' . Assignment
+   11           | ID '=' . FunctionCall
+   12           | ID '=' . ArrayUsage
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 9
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment    go to state 85
+    FunctionCall  go to state 86
+    ArrayUsage    go to state 87
+
+
+State 38
+
+   33 Assignment: ID AND . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 88
+    ArrayUsage  go to state 55
+
+
+State 39
+
+   32 Assignment: ID OR . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 89
+    ArrayUsage  go to state 55
+
+
+State 40
+
+   34 Assignment: ID LE . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 90
+    ArrayUsage  go to state 55
+
+
+State 41
+
+   35 Assignment: ID GE . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 91
+    ArrayUsage  go to state 55
+
+
+State 42
+
+   37 Assignment: ID EQ . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 92
+    ArrayUsage  go to state 55
+
+
+State 43
+
+   36 Assignment: ID NE . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 93
+    ArrayUsage  go to state 55
+
+
+State 44
+
+   39 Assignment: ID LT . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 94
+    ArrayUsage  go to state 55
+
+
+State 45
+
+   38 Assignment: ID GT . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 95
+    ArrayUsage  go to state 55
+
+
+State 46
+
+   14 Assignment: ID ',' . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 96
+    ArrayUsage  go to state 55
+
+
+State 47
+
+   16 Assignment: ID '+' . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 97
+    ArrayUsage  go to state 55
+
+
+State 48
+
+   17 Assignment: ID '-' . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 98
+    ArrayUsage  go to state 55
+
+
+State 49
+
+   18 Assignment: ID '*' . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 99
+    ArrayUsage  go to state 55
+
+
+State 50
+
+   19 Assignment: ID '/' . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 100
+    ArrayUsage  go to state 55
+
+
+State 51
+
+   49 FunctionCall: ID '(' . ')'
+   50             | ID '(' . Assignment ')'
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+    ')'        shift, and go to state 101
+
+    Assignment  go to state 102
+    ArrayUsage  go to state 55
+
+
+State 52
+
+   51 ArrayUsage: ID '[' . Assignment ']'
+   52           | ID '[' . Assignment ']' '[' Assignment ']'
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 103
+    ArrayUsage  go to state 55
+
+
+State 53
+
+   10 Assignment: ID . '=' Assignment
+   11           | ID . '=' FunctionCall
+   12           | ID . '=' ArrayUsage
+   14           | ID . ',' Assignment
+   16           | ID . '+' Assignment
+   17           | ID . '-' Assignment
+   18           | ID . '*' Assignment
+   19           | ID . '/' Assignment
+   32           | ID . OR Assignment
+   33           | ID . AND Assignment
+   34           | ID . LE Assignment
+   35           | ID . GE Assignment
+   36           | ID . NE Assignment
+   37           | ID . EQ Assignment
+   38           | ID . GT Assignment
+   39           | ID . LT Assignment
+   48           | ID .
+   51 ArrayUsage: ID . '[' Assignment ']'
+   52           | ID . '[' Assignment ']' '[' Assignment ']'
+
+    '='  shift, and go to state 37
+    AND  shift, and go to state 38
+    OR   shift, and go to state 39
+    LE   shift, and go to state 40
+    GE   shift, and go to state 41
+    EQ   shift, and go to state 42
+    NE   shift, and go to state 43
+    LT   shift, and go to state 44
+    GT   shift, and go to state 45
+    ','  shift, and go to state 46
+    '+'  shift, and go to state 47
+    '-'  shift, and go to state 48
+    '*'  shift, and go to state 49
+    '/'  shift, and go to state 50
+    '['  shift, and go to state 52
+
+    $default  reduce using rule 48 (Assignment)
+
+
+State 54
+
+   40 Assignment: INC Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    $default  reduce using rule 40 (Assignment)
+
+
+State 55
+
+   13 Assignment: ArrayUsage . '=' Assignment
+
+    '='  shift, and go to state 65
+
+
+State 56
+
+   41 Assignment: Assignment . INC
+   42           | DEC Assignment .
+   43           | Assignment . DEC
+
+    $default  reduce using rule 42 (Assignment)
+
+
+State 57
+
+   41 Assignment: Assignment . INC
+   43           | Assignment . DEC
+   44           | PERCENT Assignment .
+
+    $default  reduce using rule 44 (Assignment)
+
+
+State 58
+
+   41 Assignment: Assignment . INC
+   43           | Assignment . DEC
+   45           | AMPERSEND Assignment .
+
+    $default  reduce using rule 45 (Assignment)
+
+
+State 59
+
+   41 Assignment: Assignment . INC
+   43           | Assignment . DEC
+   46           | '{' Assignment . '}'
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+    '}'  shift, and go to state 104
+
+
+State 60
+
+    0 $accept: start $end .
+
+    $default  accept
+
+
+State 61
+
+   41 Assignment: Assignment INC .
+
+    $default  reduce using rule 41 (Assignment)
+
+
+State 62
+
+   43 Assignment: Assignment DEC .
+
+    $default  reduce using rule 43 (Assignment)
+
+
+State 63
+
+    4 Declaration: Assignment ';' .
+
+    $default  reduce using rule 4 (Declaration)
+
+
+State 64
+
+    5 Declaration: FunctionCall ';' .
+
+    $default  reduce using rule 5 (Declaration)
+
+
+State 65
+
+   13 Assignment: ArrayUsage '=' . Assignment
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 105
+    ArrayUsage  go to state 55
+
+
+State 66
+
+    6 Declaration: ArrayUsage ';' .
+
+    $default  reduce using rule 6 (Declaration)
+
+
+State 67
+
+   10 Assignment: ID . '=' Assignment
+   11           | ID . '=' FunctionCall
+   12           | ID . '=' ArrayUsage
+   14           | ID . ',' Assignment
+   16           | ID . '+' Assignment
+   17           | ID . '-' Assignment
+   18           | ID . '*' Assignment
+   19           | ID . '/' Assignment
+   32           | ID . OR Assignment
+   33           | ID . AND Assignment
+   34           | ID . LE Assignment
+   35           | ID . GE Assignment
+   36           | ID . NE Assignment
+   37           | ID . EQ Assignment
+   38           | ID . GT Assignment
+   39           | ID . LT Assignment
+   48           | ID .
+   51 ArrayUsage: ID . '[' Assignment ']'
+   52           | ID . '[' Assignment ']' '[' Assignment ']'
+   53 Function: Type ID . '(' ArgListOpt ')' CompoundStmt
+
+    '='  shift, and go to state 37
+    AND  shift, and go to state 38
+    OR   shift, and go to state 39
+    LE   shift, and go to state 40
+    GE   shift, and go to state 41
+    EQ   shift, and go to state 42
+    NE   shift, and go to state 43
+    LT   shift, and go to state 44
+    GT   shift, and go to state 45
+    ','  shift, and go to state 46
+    '+'  shift, and go to state 47
+    '-'  shift, and go to state 48
+    '*'  shift, and go to state 49
+    '/'  shift, and go to state 50
+    '('  shift, and go to state 106
+    '['  shift, and go to state 52
+
+    $default  reduce using rule 48 (Assignment)
+
+
+State 68
+
+    3 Declaration: Type Assignment . ';'
+   41 Assignment: Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+    ';'  shift, and go to state 107
+
+
+State 69
+
+    7 Declaration: Type ArrayUsage . ';'
+   13 Assignment: ArrayUsage . '=' Assignment
+
+    '='  shift, and go to state 65
+    ';'  shift, and go to state 108
+
+
+State 70
+
+    8 Declaration: StructStmt ';' .
+
+    $default  reduce using rule 8 (Declaration)
+
+
+State 71
+
+   89 StructStmt: STRUCT ID '{' . Type Assignment '}'
+
+    INT     shift, and go to state 2
+    FLOAT   shift, and go to state 3
+    CHAR    shift, and go to state 4
+    DOUBLE  shift, and go to state 5
+    VOID    shift, and go to state 6
+
+    Type  go to state 109
+
+
+State 72
+
+   25 Assignment: NUM AND Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    $default  reduce using rule 25 (Assignment)
+
+
+State 73
+
+   24 Assignment: NUM OR Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    $default  reduce using rule 24 (Assignment)
+
+
+State 74
+
+   26 Assignment: NUM LE Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    $default  reduce using rule 26 (Assignment)
+
+
+State 75
+
+   27 Assignment: NUM GE Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    $default  reduce using rule 27 (Assignment)
+
+
+State 76
+
+   29 Assignment: NUM EQ Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    $default  reduce using rule 29 (Assignment)
+
+
+State 77
+
+   28 Assignment: NUM NE Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    $default  reduce using rule 28 (Assignment)
+
+
+State 78
+
+   31 Assignment: NUM LT Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    $default  reduce using rule 31 (Assignment)
+
+
+State 79
+
+   30 Assignment: NUM GT Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    $default  reduce using rule 30 (Assignment)
+
+
+State 80
+
+   15 Assignment: NUM ',' Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    INC       [reduce using rule 15 (Assignment)]
+    DEC       [reduce using rule 15 (Assignment)]
+    $default  reduce using rule 15 (Assignment)
+
+
+State 81
+
+   20 Assignment: NUM '+' Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    INC       [reduce using rule 20 (Assignment)]
+    DEC       [reduce using rule 20 (Assignment)]
+    $default  reduce using rule 20 (Assignment)
+
+
+State 82
+
+   21 Assignment: NUM '-' Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    INC       [reduce using rule 21 (Assignment)]
+    DEC       [reduce using rule 21 (Assignment)]
+    $default  reduce using rule 21 (Assignment)
+
+
+State 83
+
+   22 Assignment: NUM '*' Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    INC       [reduce using rule 22 (Assignment)]
+    DEC       [reduce using rule 22 (Assignment)]
+    $default  reduce using rule 22 (Assignment)
+
+
+State 84
+
+   23 Assignment: NUM '/' Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    INC       [reduce using rule 23 (Assignment)]
+    DEC       [reduce using rule 23 (Assignment)]
+    $default  reduce using rule 23 (Assignment)
+
+
+State 85
+
+   10 Assignment: ID '=' Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    $default  reduce using rule 10 (Assignment)
+
+
+State 86
+
+   11 Assignment: ID '=' FunctionCall .
+
+    $default  reduce using rule 11 (Assignment)
+
+
+State 87
+
+   12 Assignment: ID '=' ArrayUsage .
+   13           | ArrayUsage . '=' Assignment
+
+    '='  shift, and go to state 65
+
+    $default  reduce using rule 12 (Assignment)
+
+
+State 88
+
+   33 Assignment: ID AND Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    $default  reduce using rule 33 (Assignment)
+
+
+State 89
+
+   32 Assignment: ID OR Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    $default  reduce using rule 32 (Assignment)
+
+
+State 90
+
+   34 Assignment: ID LE Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    $default  reduce using rule 34 (Assignment)
+
+
+State 91
+
+   35 Assignment: ID GE Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    $default  reduce using rule 35 (Assignment)
+
+
+State 92
+
+   37 Assignment: ID EQ Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    $default  reduce using rule 37 (Assignment)
+
+
+State 93
+
+   36 Assignment: ID NE Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    $default  reduce using rule 36 (Assignment)
+
+
+State 94
+
+   39 Assignment: ID LT Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    $default  reduce using rule 39 (Assignment)
+
+
+State 95
+
+   38 Assignment: ID GT Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    $default  reduce using rule 38 (Assignment)
+
+
+State 96
+
+   14 Assignment: ID ',' Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    INC       [reduce using rule 14 (Assignment)]
+    DEC       [reduce using rule 14 (Assignment)]
+    $default  reduce using rule 14 (Assignment)
+
+
+State 97
+
+   16 Assignment: ID '+' Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    INC       [reduce using rule 16 (Assignment)]
+    DEC       [reduce using rule 16 (Assignment)]
+    $default  reduce using rule 16 (Assignment)
+
+
+State 98
+
+   17 Assignment: ID '-' Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    INC       [reduce using rule 17 (Assignment)]
+    DEC       [reduce using rule 17 (Assignment)]
+    $default  reduce using rule 17 (Assignment)
+
+
+State 99
+
+   18 Assignment: ID '*' Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    INC       [reduce using rule 18 (Assignment)]
+    DEC       [reduce using rule 18 (Assignment)]
+    $default  reduce using rule 18 (Assignment)
+
+
+State 100
+
+   19 Assignment: ID '/' Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    INC       [reduce using rule 19 (Assignment)]
+    DEC       [reduce using rule 19 (Assignment)]
+    $default  reduce using rule 19 (Assignment)
+
+
+State 101
+
+   49 FunctionCall: ID '(' ')' .
+
+    $default  reduce using rule 49 (FunctionCall)
+
+
+State 102
+
+   41 Assignment: Assignment . INC
+   43           | Assignment . DEC
+   50 FunctionCall: ID '(' Assignment . ')'
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+    ')'  shift, and go to state 110
+
+
+State 103
+
+   41 Assignment: Assignment . INC
+   43           | Assignment . DEC
+   51 ArrayUsage: ID '[' Assignment . ']'
+   52           | ID '[' Assignment . ']' '[' Assignment ']'
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+    ']'  shift, and go to state 111
+
+
+State 104
+
+   46 Assignment: '{' Assignment '}' .
+
+    $default  reduce using rule 46 (Assignment)
+
+
+State 105
+
+   13 Assignment: ArrayUsage '=' Assignment .
+   41           | Assignment . INC
+   43           | Assignment . DEC
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    $default  reduce using rule 13 (Assignment)
+
+
+State 106
+
+   53 Function: Type ID '(' . ArgListOpt ')' CompoundStmt
+
+    INT     shift, and go to state 2
+    FLOAT   shift, and go to state 3
+    CHAR    shift, and go to state 4
+    DOUBLE  shift, and go to state 5
+    VOID    shift, and go to state 6
+
+    $default  reduce using rule 55 (ArgListOpt)
+
+    ArgListOpt  go to state 112
+    ArgList     go to state 113
+    Arg         go to state 114
+    Type        go to state 115
+
+
+State 107
+
+    3 Declaration: Type Assignment ';' .
+
+    $default  reduce using rule 3 (Declaration)
+
+
+State 108
+
+    7 Declaration: Type ArrayUsage ';' .
+
+    $default  reduce using rule 7 (Declaration)
+
+
+State 109
+
+   89 StructStmt: STRUCT ID '{' Type . Assignment '}'
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 116
+    ArrayUsage  go to state 55
+
+
+State 110
+
+   50 FunctionCall: ID '(' Assignment ')' .
+
+    $default  reduce using rule 50 (FunctionCall)
+
+
+State 111
+
+   51 ArrayUsage: ID '[' Assignment ']' .
+   52           | ID '[' Assignment ']' . '[' Assignment ']'
+
+    '['  shift, and go to state 117
+
+    $default  reduce using rule 51 (ArrayUsage)
+
+
+State 112
+
+   53 Function: Type ID '(' ArgListOpt . ')' CompoundStmt
+
+    ')'  shift, and go to state 118
+
+
+State 113
+
+   54 ArgListOpt: ArgList .
+   56 ArgList: ArgList . ',' Arg
+
+    ','  shift, and go to state 119
+
+    $default  reduce using rule 54 (ArgListOpt)
+
+
+State 114
+
+   57 ArgList: Arg .
+
+    $default  reduce using rule 57 (ArgList)
+
+
+State 115
+
+   58 Arg: Type . ID
+
+    ID  shift, and go to state 120
+
+
+State 116
+
+   41 Assignment: Assignment . INC
+   43           | Assignment . DEC
+   89 StructStmt: STRUCT ID '{' Type Assignment . '}'
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+    '}'  shift, and go to state 121
+
+
+State 117
+
+   52 ArrayUsage: ID '[' Assignment ']' '[' . Assignment ']'
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 122
+    ArrayUsage  go to state 55
+
+
+State 118
+
+   53 Function: Type ID '(' ArgListOpt ')' . CompoundStmt
+
+    '{'  shift, and go to state 123
+
+    CompoundStmt  go to state 124
+
+
+State 119
+
+   56 ArgList: ArgList ',' . Arg
+
+    INT     shift, and go to state 2
+    FLOAT   shift, and go to state 3
+    CHAR    shift, and go to state 4
+    DOUBLE  shift, and go to state 5
+    VOID    shift, and go to state 6
+
+    Arg   go to state 125
+    Type  go to state 115
+
+
+State 120
+
+   58 Arg: Type ID .
+
+    $default  reduce using rule 58 (Arg)
+
+
+State 121
+
+   89 StructStmt: STRUCT ID '{' Type Assignment '}' .
+
+    $default  reduce using rule 89 (StructStmt)
+
+
+State 122
+
+   41 Assignment: Assignment . INC
+   43           | Assignment . DEC
+   52 ArrayUsage: ID '[' Assignment ']' '[' Assignment . ']'
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+    ']'  shift, and go to state 126
+
+
+State 123
+
+   59 CompoundStmt: '{' . StmtList '}'
+
+    $default  reduce using rule 61 (StmtList)
+
+    StmtList  go to state 127
+
+
+State 124
+
+   53 Function: Type ID '(' ArgListOpt ')' CompoundStmt .
+
+    $default  reduce using rule 53 (Function)
+
+
+State 125
+
+   56 ArgList: ArgList ',' Arg .
+
+    $default  reduce using rule 56 (ArgList)
+
+
+State 126
+
+   52 ArrayUsage: ID '[' Assignment ']' '[' Assignment ']' .
+
+    $default  reduce using rule 52 (ArrayUsage)
+
+
+State 127
+
+   59 CompoundStmt: '{' StmtList . '}'
+   60 StmtList: StmtList . Stmt
+
+    error      shift, and go to state 1
+    INT        shift, and go to state 2
+    FLOAT      shift, and go to state 3
+    CHAR       shift, and go to state 4
+    DOUBLE     shift, and go to state 5
+    VOID       shift, and go to state 6
+    FOR        shift, and go to state 128
+    WHILE      shift, and go to state 129
+    SWITCH     shift, and go to state 130
+    CASE       shift, and go to state 131
+    BREAK      shift, and go to state 132
+    IF         shift, and go to state 133
+    PRINTF     shift, and go to state 134
+    SCANF      shift, and go to state 135
+    STRUCT     shift, and go to state 7
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 9
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    ';'        shift, and go to state 136
+    '{'        shift, and go to state 14
+    '}'        shift, and go to state 137
+
+    Declaration   go to state 138
+    Assignment    go to state 139
+    FunctionCall  go to state 18
+    ArrayUsage    go to state 19
+    Stmt          go to state 140
+    Type          go to state 141
+    WhileStmt     go to state 142
+    ForStmt       go to state 143
+    IfStmt        go to state 144
+    StructStmt    go to state 22
+    PrintFunc     go to state 145
+    ScanFunc      go to state 146
+    CaseStmt      go to state 147
+    BreakFunc     go to state 148
+    SwitchFunc    go to state 149
+
+
+State 128
+
+   80 ForStmt: FOR . '(' Type Expr ';' Expr ';' Expr ')' '{' StmtList '}'
+   81        | FOR . '(' Expr ';' Expr ';' Expr ')' CompoundStmt
+   82        | FOR . '(' Expr ')' Stmt
+   83        | FOR . '(' Expr ')' CompoundStmt
+
+    '('  shift, and go to state 150
+
+
+State 129
+
+   78 WhileStmt: WHILE . '(' Expr ')' Stmt
+   79          | WHILE . '(' Expr ')' CompoundStmt
+
+    '('  shift, and go to state 151
+
+
+State 130
+
+   96 SwitchFunc: SWITCH . '(' Expr ')' '{' StmtList '}'
+
+    '('  shift, and go to state 152
+
+
+State 131
+
+   94 CaseStmt: CASE . NUM ':' Stmt
+
+    NUM  shift, and go to state 153
+
+
+State 132
+
+   95 BreakFunc: BREAK . ';'
+
+    ';'  shift, and go to state 154
+
+
+State 133
+
+   84 IfStmt: IF . '(' Expr ')' Stmt ELSE Stmt
+   85       | IF . '(' Expr ')' Stmt
+   86       | IF . '(' Expr ')' Stmt ELSE CompoundStmt
+   87       | IF . '(' Expr ')' CompoundStmt
+   88       | IF . '(' Expr ')' CompoundStmt ELSE CompoundStmt
+
+    '('  shift, and go to state 155
+
+
+State 134
+
+   90 PrintFunc: PRINTF . '(' '"' Expr '"' ')' ';'
+   91          | PRINTF . '(' '"' ExprList '"' ')' ';'
+   92          | PRINTF . '(' '"' Expr '"' ',' Expr ')' ';'
+
+    '('  shift, and go to state 156
+
+
+State 135
+
+   93 ScanFunc: SCANF . '(' '"' ExprList '"' ',' Expr ')' ';'
+
+    '('  shift, and go to state 157
+
+
+State 136
+
+   72 Stmt: ';' .
+
+    $default  reduce using rule 72 (Stmt)
+
+
+State 137
+
+   59 CompoundStmt: '{' StmtList '}' .
+
+    $default  reduce using rule 59 (CompoundStmt)
+
+
+State 138
+
+   63 Stmt: Declaration .
+
+    $default  reduce using rule 63 (Stmt)
+
+
+State 139
+
+    4 Declaration: Assignment . ';'
+   41 Assignment: Assignment . INC
+   43           | Assignment . DEC
+   71 Stmt: Assignment .
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+    ';'  shift, and go to state 63
+
+    INC       [reduce using rule 71 (Stmt)]
+    DEC       [reduce using rule 71 (Stmt)]
+    ';'       [reduce using rule 71 (Stmt)]
+    $default  reduce using rule 71 (Stmt)
+
+
+State 140
+
+   60 StmtList: StmtList Stmt .
+
+    $default  reduce using rule 60 (StmtList)
+
+
+State 141
+
+    3 Declaration: Type . Assignment ';'
+    7            | Type . ArrayUsage ';'
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 68
+    ArrayUsage  go to state 69
+
+
+State 142
+
+   62 Stmt: WhileStmt .
+
+    $default  reduce using rule 62 (Stmt)
+
+
+State 143
+
+   64 Stmt: ForStmt .
+
+    $default  reduce using rule 64 (Stmt)
+
+
+State 144
+
+   65 Stmt: IfStmt .
+
+    $default  reduce using rule 65 (Stmt)
+
+
+State 145
+
+   66 Stmt: PrintFunc .
+
+    $default  reduce using rule 66 (Stmt)
+
+
+State 146
+
+   67 Stmt: ScanFunc .
+
+    $default  reduce using rule 67 (Stmt)
+
+
+State 147
+
+   69 Stmt: CaseStmt .
+
+    $default  reduce using rule 69 (Stmt)
+
+
+State 148
+
+   70 Stmt: BreakFunc .
+
+    $default  reduce using rule 70 (Stmt)
+
+
+State 149
+
+   68 Stmt: SwitchFunc .
+
+    $default  reduce using rule 68 (Stmt)
+
+
+State 150
+
+   80 ForStmt: FOR '(' . Type Expr ';' Expr ';' Expr ')' '{' StmtList '}'
+   81        | FOR '(' . Expr ';' Expr ';' Expr ')' CompoundStmt
+   82        | FOR '(' . Expr ')' Stmt
+   83        | FOR '(' . Expr ')' CompoundStmt
+
+    INT        shift, and go to state 2
+    FLOAT      shift, and go to state 3
+    CHAR       shift, and go to state 4
+    DOUBLE     shift, and go to state 5
+    VOID       shift, and go to state 6
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 158
+    ArrayUsage  go to state 159
+    Type        go to state 160
+    Expr        go to state 161
+
+
+State 151
+
+   78 WhileStmt: WHILE '(' . Expr ')' Stmt
+   79          | WHILE '(' . Expr ')' CompoundStmt
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 158
+    ArrayUsage  go to state 159
+    Expr        go to state 162
+
+
+State 152
+
+   96 SwitchFunc: SWITCH '(' . Expr ')' '{' StmtList '}'
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 158
+    ArrayUsage  go to state 159
+    Expr        go to state 163
+
+
+State 153
+
+   94 CaseStmt: CASE NUM . ':' Stmt
+
+    ':'  shift, and go to state 164
+
+
+State 154
+
+   95 BreakFunc: BREAK ';' .
+
+    $default  reduce using rule 95 (BreakFunc)
+
+
+State 155
+
+   84 IfStmt: IF '(' . Expr ')' Stmt ELSE Stmt
+   85       | IF '(' . Expr ')' Stmt
+   86       | IF '(' . Expr ')' Stmt ELSE CompoundStmt
+   87       | IF '(' . Expr ')' CompoundStmt
+   88       | IF '(' . Expr ')' CompoundStmt ELSE CompoundStmt
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 158
+    ArrayUsage  go to state 159
+    Expr        go to state 165
+
+
+State 156
+
+   90 PrintFunc: PRINTF '(' . '"' Expr '"' ')' ';'
+   91          | PRINTF '(' . '"' ExprList '"' ')' ';'
+   92          | PRINTF '(' . '"' Expr '"' ',' Expr ')' ';'
+
+    '"'  shift, and go to state 166
+
+
+State 157
+
+   93 ScanFunc: SCANF '(' . '"' ExprList '"' ',' Expr ')' ';'
+
+    '"'  shift, and go to state 167
+
+
+State 158
+
+   41 Assignment: Assignment . INC
+   43           | Assignment . DEC
+   99 Expr: Assignment .
+
+    INC  shift, and go to state 61
+    DEC  shift, and go to state 62
+
+    INC       [reduce using rule 99 (Expr)]
+    DEC       [reduce using rule 99 (Expr)]
+    $default  reduce using rule 99 (Expr)
+
+
+State 159
+
+   13 Assignment: ArrayUsage . '=' Assignment
+  100 Expr: ArrayUsage .
+
+    '='  shift, and go to state 65
+
+    $default  reduce using rule 100 (Expr)
+
+
+State 160
+
+   80 ForStmt: FOR '(' Type . Expr ';' Expr ';' Expr ')' '{' StmtList '}'
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 158
+    ArrayUsage  go to state 159
+    Expr        go to state 168
+
+
+State 161
+
+   81 ForStmt: FOR '(' Expr . ';' Expr ';' Expr ')' CompoundStmt
+   82        | FOR '(' Expr . ')' Stmt
+   83        | FOR '(' Expr . ')' CompoundStmt
+
+    ';'  shift, and go to state 169
+    ')'  shift, and go to state 170
+
+
+State 162
+
+   78 WhileStmt: WHILE '(' Expr . ')' Stmt
+   79          | WHILE '(' Expr . ')' CompoundStmt
+
+    ')'  shift, and go to state 171
+
+
+State 163
+
+   96 SwitchFunc: SWITCH '(' Expr . ')' '{' StmtList '}'
+
+    ')'  shift, and go to state 172
+
+
+State 164
+
+   94 CaseStmt: CASE NUM ':' . Stmt
+
+    error      shift, and go to state 1
+    INT        shift, and go to state 2
+    FLOAT      shift, and go to state 3
+    CHAR       shift, and go to state 4
+    DOUBLE     shift, and go to state 5
+    VOID       shift, and go to state 6
+    FOR        shift, and go to state 128
+    WHILE      shift, and go to state 129
+    SWITCH     shift, and go to state 130
+    CASE       shift, and go to state 131
+    BREAK      shift, and go to state 132
+    IF         shift, and go to state 133
+    PRINTF     shift, and go to state 134
+    SCANF      shift, and go to state 135
+    STRUCT     shift, and go to state 7
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 9
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    ';'        shift, and go to state 136
+    '{'        shift, and go to state 14
+
+    Declaration   go to state 138
+    Assignment    go to state 139
+    FunctionCall  go to state 18
+    ArrayUsage    go to state 19
+    Stmt          go to state 173
+    Type          go to state 141
+    WhileStmt     go to state 142
+    ForStmt       go to state 143
+    IfStmt        go to state 144
+    StructStmt    go to state 22
+    PrintFunc     go to state 145
+    ScanFunc      go to state 146
+    CaseStmt      go to state 147
+    BreakFunc     go to state 148
+    SwitchFunc    go to state 149
+
+
+State 165
+
+   84 IfStmt: IF '(' Expr . ')' Stmt ELSE Stmt
+   85       | IF '(' Expr . ')' Stmt
+   86       | IF '(' Expr . ')' Stmt ELSE CompoundStmt
+   87       | IF '(' Expr . ')' CompoundStmt
+   88       | IF '(' Expr . ')' CompoundStmt ELSE CompoundStmt
+
+    ')'  shift, and go to state 174
+
+
+State 166
+
+   90 PrintFunc: PRINTF '(' '"' . Expr '"' ')' ';'
+   91          | PRINTF '(' '"' . ExprList '"' ')' ';'
+   92          | PRINTF '(' '"' . Expr '"' ',' Expr ')' ';'
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 158
+    ArrayUsage  go to state 159
+    ExprList    go to state 175
+    Expr        go to state 176
+
+
+State 167
+
+   93 ScanFunc: SCANF '(' '"' . ExprList '"' ',' Expr ')' ';'
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 158
+    ArrayUsage  go to state 159
+    ExprList    go to state 177
+    Expr        go to state 178
+
+
+State 168
+
+   80 ForStmt: FOR '(' Type Expr . ';' Expr ';' Expr ')' '{' StmtList '}'
+
+    ';'  shift, and go to state 179
+
+
+State 169
+
+   81 ForStmt: FOR '(' Expr ';' . Expr ';' Expr ')' CompoundStmt
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 158
+    ArrayUsage  go to state 159
+    Expr        go to state 180
+
+
+State 170
+
+   82 ForStmt: FOR '(' Expr ')' . Stmt
+   83        | FOR '(' Expr ')' . CompoundStmt
+
+    error      shift, and go to state 1
+    INT        shift, and go to state 2
+    FLOAT      shift, and go to state 3
+    CHAR       shift, and go to state 4
+    DOUBLE     shift, and go to state 5
+    VOID       shift, and go to state 6
+    FOR        shift, and go to state 128
+    WHILE      shift, and go to state 129
+    SWITCH     shift, and go to state 130
+    CASE       shift, and go to state 131
+    BREAK      shift, and go to state 132
+    IF         shift, and go to state 133
+    PRINTF     shift, and go to state 134
+    SCANF      shift, and go to state 135
+    STRUCT     shift, and go to state 7
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 9
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    ';'        shift, and go to state 136
+    '{'        shift, and go to state 181
+
+    Declaration   go to state 138
+    Assignment    go to state 139
+    FunctionCall  go to state 18
+    ArrayUsage    go to state 19
+    CompoundStmt  go to state 182
+    Stmt          go to state 183
+    Type          go to state 141
+    WhileStmt     go to state 142
+    ForStmt       go to state 143
+    IfStmt        go to state 144
+    StructStmt    go to state 22
+    PrintFunc     go to state 145
+    ScanFunc      go to state 146
+    CaseStmt      go to state 147
+    BreakFunc     go to state 148
+    SwitchFunc    go to state 149
+
+
+State 171
+
+   78 WhileStmt: WHILE '(' Expr ')' . Stmt
+   79          | WHILE '(' Expr ')' . CompoundStmt
+
+    error      shift, and go to state 1
+    INT        shift, and go to state 2
+    FLOAT      shift, and go to state 3
+    CHAR       shift, and go to state 4
+    DOUBLE     shift, and go to state 5
+    VOID       shift, and go to state 6
+    FOR        shift, and go to state 128
+    WHILE      shift, and go to state 129
+    SWITCH     shift, and go to state 130
+    CASE       shift, and go to state 131
+    BREAK      shift, and go to state 132
+    IF         shift, and go to state 133
+    PRINTF     shift, and go to state 134
+    SCANF      shift, and go to state 135
+    STRUCT     shift, and go to state 7
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 9
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    ';'        shift, and go to state 136
+    '{'        shift, and go to state 181
+
+    Declaration   go to state 138
+    Assignment    go to state 139
+    FunctionCall  go to state 18
+    ArrayUsage    go to state 19
+    CompoundStmt  go to state 184
+    Stmt          go to state 185
+    Type          go to state 141
+    WhileStmt     go to state 142
+    ForStmt       go to state 143
+    IfStmt        go to state 144
+    StructStmt    go to state 22
+    PrintFunc     go to state 145
+    ScanFunc      go to state 146
+    CaseStmt      go to state 147
+    BreakFunc     go to state 148
+    SwitchFunc    go to state 149
+
+
+State 172
+
+   96 SwitchFunc: SWITCH '(' Expr ')' . '{' StmtList '}'
+
+    '{'  shift, and go to state 186
+
+
+State 173
+
+   94 CaseStmt: CASE NUM ':' Stmt .
+
+    $default  reduce using rule 94 (CaseStmt)
+
+
+State 174
+
+   84 IfStmt: IF '(' Expr ')' . Stmt ELSE Stmt
+   85       | IF '(' Expr ')' . Stmt
+   86       | IF '(' Expr ')' . Stmt ELSE CompoundStmt
+   87       | IF '(' Expr ')' . CompoundStmt
+   88       | IF '(' Expr ')' . CompoundStmt ELSE CompoundStmt
+
+    error      shift, and go to state 1
+    INT        shift, and go to state 2
+    FLOAT      shift, and go to state 3
+    CHAR       shift, and go to state 4
+    DOUBLE     shift, and go to state 5
+    VOID       shift, and go to state 6
+    FOR        shift, and go to state 128
+    WHILE      shift, and go to state 129
+    SWITCH     shift, and go to state 130
+    CASE       shift, and go to state 131
+    BREAK      shift, and go to state 132
+    IF         shift, and go to state 133
+    PRINTF     shift, and go to state 134
+    SCANF      shift, and go to state 135
+    STRUCT     shift, and go to state 7
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 9
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    ';'        shift, and go to state 136
+    '{'        shift, and go to state 181
+
+    Declaration   go to state 138
+    Assignment    go to state 139
+    FunctionCall  go to state 18
+    ArrayUsage    go to state 19
+    CompoundStmt  go to state 187
+    Stmt          go to state 188
+    Type          go to state 141
+    WhileStmt     go to state 142
+    ForStmt       go to state 143
+    IfStmt        go to state 144
+    StructStmt    go to state 22
+    PrintFunc     go to state 145
+    ScanFunc      go to state 146
+    CaseStmt      go to state 147
+    BreakFunc     go to state 148
+    SwitchFunc    go to state 149
+
+
+State 175
+
+   91 PrintFunc: PRINTF '(' '"' ExprList . '"' ')' ';'
+   97 ExprList: ExprList . Expr
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+    '"'        shift, and go to state 189
+
+    Assignment  go to state 158
+    ArrayUsage  go to state 159
+    Expr        go to state 190
+
+
+State 176
+
+   90 PrintFunc: PRINTF '(' '"' Expr . '"' ')' ';'
+   92          | PRINTF '(' '"' Expr . '"' ',' Expr ')' ';'
+   98 ExprList: Expr .
+
+    '"'  shift, and go to state 191
+
+    '"'       [reduce using rule 98 (ExprList)]
+    $default  reduce using rule 98 (ExprList)
+
+
+State 177
+
+   93 ScanFunc: SCANF '(' '"' ExprList . '"' ',' Expr ')' ';'
+   97 ExprList: ExprList . Expr
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+    '"'        shift, and go to state 192
+
+    Assignment  go to state 158
+    ArrayUsage  go to state 159
+    Expr        go to state 190
+
+
+State 178
+
+   98 ExprList: Expr .
+
+    $default  reduce using rule 98 (ExprList)
+
+
+State 179
+
+   80 ForStmt: FOR '(' Type Expr ';' . Expr ';' Expr ')' '{' StmtList '}'
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 158
+    ArrayUsage  go to state 159
+    Expr        go to state 193
+
+
+State 180
+
+   81 ForStmt: FOR '(' Expr ';' Expr . ';' Expr ')' CompoundStmt
+
+    ';'  shift, and go to state 194
+
+
+State 181
+
+   46 Assignment: '{' . Assignment '}'
+   59 CompoundStmt: '{' . StmtList '}'
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    NUM        [reduce using rule 61 (StmtList)]
+    ID         [reduce using rule 61 (StmtList)]
+    INC        [reduce using rule 61 (StmtList)]
+    DEC        [reduce using rule 61 (StmtList)]
+    PERCENT    [reduce using rule 61 (StmtList)]
+    AMPERSEND  [reduce using rule 61 (StmtList)]
+    '{'        [reduce using rule 61 (StmtList)]
+    $default   reduce using rule 61 (StmtList)
+
+    Assignment  go to state 59
+    ArrayUsage  go to state 55
+    StmtList    go to state 127
+
+
+State 182
+
+   83 ForStmt: FOR '(' Expr ')' CompoundStmt .
+
+    $default  reduce using rule 83 (ForStmt)
+
+
+State 183
+
+   82 ForStmt: FOR '(' Expr ')' Stmt .
+
+    $default  reduce using rule 82 (ForStmt)
+
+
+State 184
+
+   79 WhileStmt: WHILE '(' Expr ')' CompoundStmt .
+
+    $default  reduce using rule 79 (WhileStmt)
+
+
+State 185
+
+   78 WhileStmt: WHILE '(' Expr ')' Stmt .
+
+    $default  reduce using rule 78 (WhileStmt)
+
+
+State 186
+
+   96 SwitchFunc: SWITCH '(' Expr ')' '{' . StmtList '}'
+
+    $default  reduce using rule 61 (StmtList)
+
+    StmtList  go to state 195
+
+
+State 187
+
+   87 IfStmt: IF '(' Expr ')' CompoundStmt .
+   88       | IF '(' Expr ')' CompoundStmt . ELSE CompoundStmt
+
+    ELSE  shift, and go to state 196
+
+    ELSE      [reduce using rule 87 (IfStmt)]
+    $default  reduce using rule 87 (IfStmt)
+
+
+State 188
+
+   84 IfStmt: IF '(' Expr ')' Stmt . ELSE Stmt
+   85       | IF '(' Expr ')' Stmt .
+   86       | IF '(' Expr ')' Stmt . ELSE CompoundStmt
+
+    ELSE  shift, and go to state 197
+
+    ELSE      [reduce using rule 85 (IfStmt)]
+    $default  reduce using rule 85 (IfStmt)
+
+
+State 189
+
+   91 PrintFunc: PRINTF '(' '"' ExprList '"' . ')' ';'
+
+    ')'  shift, and go to state 198
+
+
+State 190
+
+   97 ExprList: ExprList Expr .
+
+    $default  reduce using rule 97 (ExprList)
+
+
+State 191
+
+   90 PrintFunc: PRINTF '(' '"' Expr '"' . ')' ';'
+   92          | PRINTF '(' '"' Expr '"' . ',' Expr ')' ';'
+
+    ','  shift, and go to state 199
+    ')'  shift, and go to state 200
+
+
+State 192
+
+   93 ScanFunc: SCANF '(' '"' ExprList '"' . ',' Expr ')' ';'
+
+    ','  shift, and go to state 201
+
+
+State 193
+
+   80 ForStmt: FOR '(' Type Expr ';' Expr . ';' Expr ')' '{' StmtList '}'
+
+    ';'  shift, and go to state 202
+
+
+State 194
+
+   81 ForStmt: FOR '(' Expr ';' Expr ';' . Expr ')' CompoundStmt
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 158
+    ArrayUsage  go to state 159
+    Expr        go to state 203
+
+
+State 195
+
+   60 StmtList: StmtList . Stmt
+   96 SwitchFunc: SWITCH '(' Expr ')' '{' StmtList . '}'
+
+    error      shift, and go to state 1
+    INT        shift, and go to state 2
+    FLOAT      shift, and go to state 3
+    CHAR       shift, and go to state 4
+    DOUBLE     shift, and go to state 5
+    VOID       shift, and go to state 6
+    FOR        shift, and go to state 128
+    WHILE      shift, and go to state 129
+    SWITCH     shift, and go to state 130
+    CASE       shift, and go to state 131
+    BREAK      shift, and go to state 132
+    IF         shift, and go to state 133
+    PRINTF     shift, and go to state 134
+    SCANF      shift, and go to state 135
+    STRUCT     shift, and go to state 7
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 9
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    ';'        shift, and go to state 136
+    '{'        shift, and go to state 14
+    '}'        shift, and go to state 204
+
+    Declaration   go to state 138
+    Assignment    go to state 139
+    FunctionCall  go to state 18
+    ArrayUsage    go to state 19
+    Stmt          go to state 140
+    Type          go to state 141
+    WhileStmt     go to state 142
+    ForStmt       go to state 143
+    IfStmt        go to state 144
+    StructStmt    go to state 22
+    PrintFunc     go to state 145
+    ScanFunc      go to state 146
+    CaseStmt      go to state 147
+    BreakFunc     go to state 148
+    SwitchFunc    go to state 149
+
+
+State 196
+
+   88 IfStmt: IF '(' Expr ')' CompoundStmt ELSE . CompoundStmt
+
+    '{'  shift, and go to state 123
+
+    CompoundStmt  go to state 205
+
+
+State 197
+
+   84 IfStmt: IF '(' Expr ')' Stmt ELSE . Stmt
+   86       | IF '(' Expr ')' Stmt ELSE . CompoundStmt
+
+    error      shift, and go to state 1
+    INT        shift, and go to state 2
+    FLOAT      shift, and go to state 3
+    CHAR       shift, and go to state 4
+    DOUBLE     shift, and go to state 5
+    VOID       shift, and go to state 6
+    FOR        shift, and go to state 128
+    WHILE      shift, and go to state 129
+    SWITCH     shift, and go to state 130
+    CASE       shift, and go to state 131
+    BREAK      shift, and go to state 132
+    IF         shift, and go to state 133
+    PRINTF     shift, and go to state 134
+    SCANF      shift, and go to state 135
+    STRUCT     shift, and go to state 7
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 9
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    ';'        shift, and go to state 136
+    '{'        shift, and go to state 181
+
+    Declaration   go to state 138
+    Assignment    go to state 139
+    FunctionCall  go to state 18
+    ArrayUsage    go to state 19
+    CompoundStmt  go to state 206
+    Stmt          go to state 207
+    Type          go to state 141
+    WhileStmt     go to state 142
+    ForStmt       go to state 143
+    IfStmt        go to state 144
+    StructStmt    go to state 22
+    PrintFunc     go to state 145
+    ScanFunc      go to state 146
+    CaseStmt      go to state 147
+    BreakFunc     go to state 148
+    SwitchFunc    go to state 149
+
+
+State 198
+
+   91 PrintFunc: PRINTF '(' '"' ExprList '"' ')' . ';'
+
+    ';'  shift, and go to state 208
+
+
+State 199
+
+   92 PrintFunc: PRINTF '(' '"' Expr '"' ',' . Expr ')' ';'
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 158
+    ArrayUsage  go to state 159
+    Expr        go to state 209
+
+
+State 200
+
+   90 PrintFunc: PRINTF '(' '"' Expr '"' ')' . ';'
+
+    ';'  shift, and go to state 210
+
+
+State 201
+
+   93 ScanFunc: SCANF '(' '"' ExprList '"' ',' . Expr ')' ';'
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 158
+    ArrayUsage  go to state 159
+    Expr        go to state 211
+
+
+State 202
+
+   80 ForStmt: FOR '(' Type Expr ';' Expr ';' . Expr ')' '{' StmtList '}'
+
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 53
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    '{'        shift, and go to state 14
+
+    Assignment  go to state 158
+    ArrayUsage  go to state 159
+    Expr        go to state 212
+
+
+State 203
+
+   81 ForStmt: FOR '(' Expr ';' Expr ';' Expr . ')' CompoundStmt
+
+    ')'  shift, and go to state 213
+
+
+State 204
+
+   96 SwitchFunc: SWITCH '(' Expr ')' '{' StmtList '}' .
+
+    $default  reduce using rule 96 (SwitchFunc)
+
+
+State 205
+
+   88 IfStmt: IF '(' Expr ')' CompoundStmt ELSE CompoundStmt .
+
+    $default  reduce using rule 88 (IfStmt)
+
+
+State 206
+
+   86 IfStmt: IF '(' Expr ')' Stmt ELSE CompoundStmt .
+
+    $default  reduce using rule 86 (IfStmt)
+
+
+State 207
+
+   84 IfStmt: IF '(' Expr ')' Stmt ELSE Stmt .
+
+    $default  reduce using rule 84 (IfStmt)
+
+
+State 208
+
+   91 PrintFunc: PRINTF '(' '"' ExprList '"' ')' ';' .
+
+    $default  reduce using rule 91 (PrintFunc)
+
+
+State 209
+
+   92 PrintFunc: PRINTF '(' '"' Expr '"' ',' Expr . ')' ';'
+
+    ')'  shift, and go to state 214
+
+
+State 210
+
+   90 PrintFunc: PRINTF '(' '"' Expr '"' ')' ';' .
+
+    $default  reduce using rule 90 (PrintFunc)
+
+
+State 211
+
+   93 ScanFunc: SCANF '(' '"' ExprList '"' ',' Expr . ')' ';'
+
+    ')'  shift, and go to state 215
+
+
+State 212
+
+   80 ForStmt: FOR '(' Type Expr ';' Expr ';' Expr . ')' '{' StmtList '}'
+
+    ')'  shift, and go to state 216
+
+
+State 213
+
+   81 ForStmt: FOR '(' Expr ';' Expr ';' Expr ')' . CompoundStmt
+
+    '{'  shift, and go to state 123
+
+    CompoundStmt  go to state 217
+
+
+State 214
+
+   92 PrintFunc: PRINTF '(' '"' Expr '"' ',' Expr ')' . ';'
+
+    ';'  shift, and go to state 218
+
+
+State 215
+
+   93 ScanFunc: SCANF '(' '"' ExprList '"' ',' Expr ')' . ';'
+
+    ';'  shift, and go to state 219
+
+
+State 216
+
+   80 ForStmt: FOR '(' Type Expr ';' Expr ';' Expr ')' . '{' StmtList '}'
+
+    '{'  shift, and go to state 220
+
+
+State 217
+
+   81 ForStmt: FOR '(' Expr ';' Expr ';' Expr ')' CompoundStmt .
+
+    $default  reduce using rule 81 (ForStmt)
+
+
+State 218
+
+   92 PrintFunc: PRINTF '(' '"' Expr '"' ',' Expr ')' ';' .
+
+    $default  reduce using rule 92 (PrintFunc)
+
+
+State 219
+
+   93 ScanFunc: SCANF '(' '"' ExprList '"' ',' Expr ')' ';' .
+
+    $default  reduce using rule 93 (ScanFunc)
+
+
+State 220
+
+   80 ForStmt: FOR '(' Type Expr ';' Expr ';' Expr ')' '{' . StmtList '}'
+
+    $default  reduce using rule 61 (StmtList)
+
+    StmtList  go to state 221
+
+
+State 221
+
+   60 StmtList: StmtList . Stmt
+   80 ForStmt: FOR '(' Type Expr ';' Expr ';' Expr ')' '{' StmtList . '}'
+
+    error      shift, and go to state 1
+    INT        shift, and go to state 2
+    FLOAT      shift, and go to state 3
+    CHAR       shift, and go to state 4
+    DOUBLE     shift, and go to state 5
+    VOID       shift, and go to state 6
+    FOR        shift, and go to state 128
+    WHILE      shift, and go to state 129
+    SWITCH     shift, and go to state 130
+    CASE       shift, and go to state 131
+    BREAK      shift, and go to state 132
+    IF         shift, and go to state 133
+    PRINTF     shift, and go to state 134
+    SCANF      shift, and go to state 135
+    STRUCT     shift, and go to state 7
+    NUM        shift, and go to state 8
+    ID         shift, and go to state 9
+    INC        shift, and go to state 10
+    DEC        shift, and go to state 11
+    PERCENT    shift, and go to state 12
+    AMPERSEND  shift, and go to state 13
+    ';'        shift, and go to state 136
+    '{'        shift, and go to state 14
+    '}'        shift, and go to state 222
+
+    Declaration   go to state 138
+    Assignment    go to state 139
+    FunctionCall  go to state 18
+    ArrayUsage    go to state 19
+    Stmt          go to state 140
+    Type          go to state 141
+    WhileStmt     go to state 142
+    ForStmt       go to state 143
+    IfStmt        go to state 144
+    StructStmt    go to state 22
+    PrintFunc     go to state 145
+    ScanFunc      go to state 146
+    CaseStmt      go to state 147
+    BreakFunc     go to state 148
+    SwitchFunc    go to state 149
+
+
+State 222
+
+   80 ForStmt: FOR '(' Type Expr ';' Expr ';' Expr ')' '{' StmtList '}' .
+
+    $default  reduce using rule 80 (ForStmt)
